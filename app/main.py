@@ -1,5 +1,7 @@
 from fastapi import FastAPI
-from app.model_loader import load_decision_model
+from app.routes.predict import router as predict_router
+from app.routes.anomaly import router as anomaly_router
+from app.routes.evaluate import router as evaluate_router
 
 app = FastAPI(
     title="DataLens ML Model Serving",
@@ -7,12 +9,10 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Load model at startup
-decision_model = load_decision_model()
+app.include_router(predict_router)
+app.include_router(anomaly_router)
+app.include_router(evaluate_router)
 
 @app.get("/")
 def health_check():
-    return {
-        "status": "ok",
-        "message": "DataLens ML API is running"
-    }
+    return {"status": "ok"}

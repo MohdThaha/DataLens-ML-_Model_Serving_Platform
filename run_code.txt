@@ -1,0 +1,4 @@
+python app/generate_data.py
+python training/train_decision_model.py
+uvicorn app.main:app --reload
+python training/train_anomaly_model.py
